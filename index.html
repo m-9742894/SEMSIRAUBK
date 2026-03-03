@@ -50,7 +50,7 @@
             -webkit-backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 30px;
-            padding: 60px 40px;
+            padding: 40px 40px;
             width: 90%;
             max-width: 800px;
             text-align: center;
@@ -63,26 +63,39 @@
         }
 
         .glass-card:hover {
-            transform: rotateX(0deg) rotateY(0deg) scale(1.02);
+            transform: rotateX(0deg) rotateY(0deg) scale(1.01);
         }
 
-        /* Tajuk Utama */
+        /* Gaya Logo */
+        .school-logo {
+            width: 120px; /* Anda boleh laras saiz ini */
+            height: auto;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 10px rgba(255,255,255,0.5));
+            animation: pulse 3s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
         h1 {
             font-family: 'Orbitron', sans-serif;
             color: #fff;
-            font-size: 3rem;
+            font-size: 2.8rem;
             text-shadow: 0 0 15px var(--primary-glow);
             margin-bottom: 5px;
             letter-spacing: 3px;
         }
 
-        /* Tajuk Sub-Unit */
         h2 {
             font-family: 'Quicksand', sans-serif;
             color: #ffd180;
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             font-weight: 700;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             text-transform: uppercase;
             letter-spacing: 1px;
             line-height: 1.4;
@@ -93,11 +106,10 @@
             font-style: italic;
             font-size: 1.1rem;
             line-height: 1.8;
-            margin-bottom: 40px;
+            margin-bottom: 35px;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
         }
 
-        /* Button Digital 3D */
         .btn-enter {
             position: relative;
             padding: 15px 50px;
@@ -120,14 +132,13 @@
             transform: translateY(-3px);
         }
 
-        /* Bunga Animasi 3D (Sway & Rotate) */
+        /* Bunga Beralun Statik */
         .flower {
             position: absolute;
             font-size: 45px;
             filter: drop-shadow(0 0 10px rgba(255,255,255,0.5));
             animation: swayRotate 6s ease-in-out infinite;
             z-index: 1;
-            user-select: none;
         }
 
         @keyframes swayRotate {
@@ -154,13 +165,14 @@
     <div class="flower" style="top: 15%; right: 10%; animation-delay: 1s;">🌼</div>
     <div class="flower" style="bottom: 15%; left: 12%; animation-delay: 2s;">🌻</div>
     <div class="flower" style="bottom: 10%; right: 8%; animation-delay: 3s;">🌷</div>
-    <div class="flower" style="top: 45%; left: 3%; animation-delay: 1.5s;">✨</div>
 
     <div class="glass-card">
+        <img src="LOGO SEMSIRA.png" alt="Logo SMKSS" class="school-logo">
+        
         <h1>SELAMAT DATANG</h1>
         <h2>LAMAN SESAWANG UNIT BIMBINGAN DAN KAUNSELING<br>SMK SYED SIRAJUDDIN PERLIS</h2>
         
-        <div style="width: 80px; height: 4px; background: linear-gradient(to right, var(--secondary-glow), var(--primary-glow)); margin: 0 auto 30px;"></div>
+        <div style="width: 80px; height: 4px; background: linear-gradient(to right, var(--secondary-glow), var(--primary-glow)); margin: 0 auto 25px;"></div>
         
         <p class="quote">
             "Setiap hati ada ceritanya, setiap jiwa ada kekuatannya. <br>
