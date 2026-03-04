@@ -18,17 +18,18 @@
         }
 
         body {
-            /* Background dengan vibe perasaan/mood */
             background: radial-gradient(circle at center, #0a192f, #000000);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start; /* Ubah ke flex-start supaya boleh skrol dengan natural */
             font-family: 'Quicksand', sans-serif;
             color: white;
-            overflow: hidden;
-            padding: 20px;
+            /* Membolehkan skrol jika kandungan lebih tinggi dari skrin */
+            overflow-y: auto; 
+            overflow-x: hidden;
+            padding: 40px 20px;
             position: relative;
         }
 
@@ -44,7 +45,6 @@
             animation: pulse 10s infinite alternate;
         }
 
-        /* Zarah cahaya bergerak (Energetic Particles) */
         .particles {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -65,7 +65,6 @@
             50% { opacity: 0.6; }
             100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
         }
-        /* ------------------------------------ */
 
         @keyframes pulse {
             0% { opacity: 0.5; transform: scale(1); }
@@ -95,6 +94,8 @@
             perspective: 1000px;
             width: 100%;
             max-width: 900px;
+            /* Memastikan container ada ruang bawah */
+            padding-bottom: 20px; 
         }
 
         .mood-card {
@@ -126,9 +127,12 @@
             50% { transform: translateY(-20px); }
         }
 
-        .mood-card:hover {
-            transform: translateY(-15px) scale(1.03) rotateX(5deg);
-            background: rgba(255, 255, 255, 0.1);
+        /* Efek Hover diperbaiki supaya tidak lari di mobile */
+        @media (min-width: 1024px) {
+            .mood-card:hover {
+                transform: translateY(-15px) scale(1.03) rotateX(5deg);
+                background: rgba(255, 255, 255, 0.1);
+            }
         }
 
         .icon-circle {
@@ -178,7 +182,8 @@
         }
 
         .btn-back {
-            margin-top: 60px;
+            margin-top: 40px;
+            margin-bottom: 20px; /* Jarak bawah tambahan untuk mobile */
             color: rgba(255,255,255,0.5);
             text-decoration: none;
             font-size: 0.85rem;
@@ -203,7 +208,8 @@
             .card-container {
                 gap: 20px;
             }
-            h1 { margin-top: 40px; }
+            h1 { margin-top: 20px; }
+            .mood-card:hover { transform: none; } /* Matikan tilt di mobile supaya senang tekan */
         }
     </style>
 </head>
@@ -250,16 +256,18 @@
         }
         setInterval(createParticle, 200);
 
-        // Efek Tilt Mengikut Mouse (Kod asal anda)
-        document.addEventListener('mousemove', (e) => {
-            const cards = document.querySelectorAll('.mood-card');
-            let xAxis = (window.innerWidth / 2 - e.clientX) / 50;
-            let yAxis = (window.innerHeight / 2 - e.clientY) / 50;
-            
-            cards.forEach(card => {
-                card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+        // Efek Tilt Mengikut Mouse (Hanya aktif pada desktop)
+        if (window.innerWidth > 1024) {
+            document.addEventListener('mousemove', (e) => {
+                const cards = document.querySelectorAll('.mood-card');
+                let xAxis = (window.innerWidth / 2 - e.clientX) / 50;
+                let yAxis = (window.innerHeight / 2 - e.clientY) / 50;
+                
+                cards.forEach(card => {
+                    card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+                });
             });
-        });
+        }
     </script>
 </body>
 </html>
