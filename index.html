@@ -21,13 +21,14 @@
             background: radial-gradient(circle at center, #1a2a6c, #b21f1f, #fdbb2d);
             background-size: 400% 400%;
             animation: gradientBG 15s ease infinite;
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
+            overflow-x: hidden; /* Elakkan scroll melintang */
             font-family: 'Quicksand', sans-serif;
             perspective: 1000px;
+            padding: 20px;
         }
 
         @keyframes gradientBG {
@@ -50,8 +51,8 @@
             -webkit-backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 30px;
-            padding: 40px 40px;
-            width: 90%;
+            padding: 40px 20px;
+            width: 100%;
             max-width: 800px;
             text-align: center;
             box-shadow: 0 25px 45px rgba(0,0,0,0.3), 
@@ -68,7 +69,7 @@
 
         /* Gaya Logo */
         .school-logo {
-            width: 120px; /* Anda boleh laras saiz ini */
+            width: 100px;
             height: auto;
             margin-bottom: 20px;
             filter: drop-shadow(0 0 10px rgba(255,255,255,0.5));
@@ -84,16 +85,17 @@
         h1 {
             font-family: 'Orbitron', sans-serif;
             color: #fff;
-            font-size: 2.8rem;
+            font-size: 2.5rem;
             text-shadow: 0 0 15px var(--primary-glow);
-            margin-bottom: 5px;
-            letter-spacing: 3px;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+            line-height: 1.2;
         }
 
         h2 {
             font-family: 'Quicksand', sans-serif;
             color: #ffd180;
-            font-size: 1.3rem;
+            font-size: 1.1rem;
             font-weight: 700;
             margin-bottom: 25px;
             text-transform: uppercase;
@@ -104,17 +106,18 @@
         .quote {
             color: #e0f7fa;
             font-style: italic;
-            font-size: 1.1rem;
-            line-height: 1.8;
+            font-size: 1rem;
+            line-height: 1.6;
             margin-bottom: 35px;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            padding: 0 10px;
         }
 
         .btn-enter {
             position: relative;
-            padding: 15px 50px;
+            padding: 12px 40px;
             font-family: 'Orbitron', sans-serif;
-            font-size: 1.1rem;
+            font-size: 1rem;
             color: #fff;
             background: linear-gradient(45deg, #ff4081, #00e5ff);
             border: none;
@@ -130,6 +133,17 @@
         .btn-enter:hover {
             box-shadow: 0 0 30px var(--primary-glow);
             transform: translateY(-3px);
+        }
+
+        /* Responsive Settings */
+        @media (max-width: 600px) {
+            h1 { font-size: 1.8rem; }
+            h2 { font-size: 0.9rem; }
+            .quote { font-size: 0.9rem; }
+            .school-logo { width: 80px; }
+            .glass-card { padding: 30px 15px; transform: none; }
+            .glass-card:hover { transform: scale(1.01); }
+            .flower { font-size: 30px; }
         }
 
         /* Bunga Beralun Statik */
@@ -161,10 +175,10 @@
     <div id="particles"></div>
     <div class="overlay"></div>
 
-    <div class="flower" style="top: 10%; left: 8%; animation-delay: 0s;">🌸</div>
-    <div class="flower" style="top: 15%; right: 10%; animation-delay: 1s;">🌼</div>
-    <div class="flower" style="bottom: 15%; left: 12%; animation-delay: 2s;">🌻</div>
-    <div class="flower" style="bottom: 10%; right: 8%; animation-delay: 3s;">🌷</div>
+    <div class="flower" style="top: 5%; left: 5%; animation-delay: 0s;">🌸</div>
+    <div class="flower" style="top: 10%; right: 5%; animation-delay: 1s;">🌼</div>
+    <div class="flower" style="bottom: 10%; left: 5%; animation-delay: 2s;">🌻</div>
+    <div class="flower" style="bottom: 5%; right: 5%; animation-delay: 3s;">🌷</div>
 
     <div class="glass-card">
         <img src="LOGO SEMSIRA.png" alt="Logo SMKSS" class="school-logo">
@@ -172,7 +186,7 @@
         <h1>SELAMAT DATANG</h1>
         <h2>LAMAN SESAWANG UNIT BIMBINGAN DAN KAUNSELING<br>SMK SYED SIRAJUDDIN PERLIS</h2>
         
-        <div style="width: 80px; height: 4px; background: linear-gradient(to right, var(--secondary-glow), var(--primary-glow)); margin: 0 auto 25px;"></div>
+        <div style="width: 60px; height: 3px; background: linear-gradient(to right, var(--secondary-glow), var(--primary-glow)); margin: 0 auto 20px;"></div>
         
         <p class="quote">
             "Setiap hati ada ceritanya, setiap jiwa ada kekuatannya. <br>
@@ -185,7 +199,7 @@
 
     <script>
         const container = document.getElementById('particles');
-        for (let i = 0; i < 40; i++) {
+        for (let i = 0; i < 30; i++) {
             const particle = document.createElement('div');
             particle.style.position = 'absolute';
             particle.style.width = Math.random() * 4 + 'px';
