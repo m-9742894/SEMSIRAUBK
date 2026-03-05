@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pilih Emosi | UBK SEMSIRA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            min-height: 100vh;
+            font-family: 'Fredoka', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            overflow-x: hidden;
+            overflow-y: auto; /* Boleh scroll di phone */
+            padding: 40px 20px;
+        }
+
+        /* --- MUSIC --- */
+        .music-ctrl {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: white;
+            padding: 10px 15px;
+            border-radius: 50px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            cursor: pointer;
+            border: 2px solid #ff7675;
+            font-size: 0.8rem;
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            color: #d15076;
+            margin-bottom: 40px;
+            text-align: center;
+            text-shadow: 2px 2px 0px white;
+            font-size: clamp(1.1rem, 5vw, 1.8rem);
+        }
+
+        /* --- WHEEL SYSTEM --- */
+        .wheel-wrapper {
+            position: relative;
+            width: clamp(300px, 85vw, 450px);
+            height: clamp(300px, 85vw, 450px);
+            margin-bottom: 20px;
+        }
+
+        /* Penunjuk (Pointer) - Statik di Atas */
+        .pointer {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 45px;
+            height: 45px;
+            background: #2d3436;
+            clip-path: polygon(50% 100%, 0 0, 100% 0);
+            z-index: 100;
+            border: 3px solid white;
+        }
+
+        /* Roda Utama yang akan berpusing */
+        .wheel {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 15px solid white;
+            position: relative;
+            /* Pembahagian 6 warna sama rata */
+            background: conic-gradient(
+                #ff7675 0deg 60deg, 
+                #74b9ff 60deg 120deg, 
+                #a29bfe 120deg 180deg, 
+                #fab1a0 180deg 240deg, 
+                #55efc4 240deg 300deg, 
+                #ffeaa7 300deg 360deg
+            );
+            /* Mula dengan -30deg supaya pointer tunjuk TENGAH partition pertama */
+            transform: rotate(-30deg);
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        /* Container Label - Anak kepada .wheel (Ikut berpusing) */
+        .label {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            top: 50%;
+            left: 50%;
+            margin-top: -60px;
+            margin-left: -60px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+        }
+
+        /* Emoji & Tulisan Melekat dalam partition */
+        /* Kita pusingkan label ke posisi tengah setiap 60 deg */
+        .l1 { transform: rotate(30deg) translateY(-130px); }
+        .l2 { transform: rotate(90deg) translateY(-130px); }
+        .l3 { transform: rotate(150deg) translateY(-130px); }
+        .l4 { transform: rotate(210deg) translateY(-130px); }
+        .l5 { transform: rotate(270deg) translateY(-130px); }
+        .l6 { transform: rotate(330deg) translateY(-130px); }
+
+        /* Emoji & Tulisan statik dalam frame sendiri (melekat pada roda) */
+        .label span { font-size: 2.5rem; display: block; margin-bottom: 5px; }
+        .label b { font-size: 1rem; text-transform: uppercase; }
+        .l6 b { color: #2d3436; text-shadow: none; }
+
+        /* --- CONTROLS --- */
+        .controls {
+            display: flex;
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .btn-nav {
+            background: white;
+            border: none;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            font-size: 2rem;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+        }
+
+        .btn-nav:active { transform: scale(0.9); }
+
+        .btn-action {
+            margin-top: 25px;
+            padding: 18px 40px;
+            background: #d15076;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            text-decoration: none;
+            display: none;
+            box-shadow: 0 10px 20px rgba(209, 80, 118, 0.3);
+            animation: popUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes popUp { from { transform: scale(0); } to { transform: scale(1); } }
+
+        .btn-back { margin-top: 40px; text-decoration: none; color: #636e72; font-weight: 600; padding-bottom: 30px;}
+
+        /* Mobile Fix */
+        @media (max-width: 480px) {
+            .wheel-wrapper { width: 320px; height: 320px; }
+            .l1, .l2, .l3, .l4, .l5, .l6 { transform: rotate(var(--rot)) translateY(-95px); }
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="bgMusic" loop>
+        <source src="https://www.chosic.com/wp-content/uploads/2021/07/The-Garden-State-Free-Lofi-Chill-Hop-Music.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="music-ctrl" onclick="toggleMusic()">
+        <span id="musicIcon">🔈 Muzik OFF</span>
+    </div>
+
+    <h1>Pilih perasaan anda sekarang</h1>
+
+    <div class="wheel-wrapper">
+        <div class="pointer"></div>
+        
+        <div class="wheel" id="wheel">
+            <div class="label l1" style="--rot:30deg"><span>😵‍💫</span><b>Tertekan</b></div>
+            <div class="label l2" style="--rot:90deg"><span>😢</span><b>Sedih</b></div>
+            <div class="label l3" style="--rot:150deg"><span>😰</span><b>Bimbang</b></div>
+            <div class="label l4" style="--rot:210deg"><span>😡</span><b>Marah</b></div>
+            <div class="label l5" style="--rot:270deg"><span>😫</span><b>Stress</b></div>
+            <div class="label l6" style="--rot:330deg"><span>😕</span><b>Rungsing</b></div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button class="btn-nav" onclick="rotateWheel(60)">⬅️</button>
+        <button class="btn-nav" onclick="rotateWheel(-60)">➡️</button>
+    </div>
+
+    <a href="mengatasi.html" id="solveBtn" class="btn-action">CARA MENGATASI</a>
+
+    <a href="mindfulness.html" class="btn-back">← Kembali</a>
+
+    <script>
+        const wheel = document.getElementById('wheel');
+        const solveBtn = document.getElementById('solveBtn');
+        const bgMusic = document.getElementById('bgMusic');
+        
+        // Mula pada -30 supaya pointer tunjuk tengah partition pertama
+        let currentRotation = -30; 
+        const emotions = ["Tertekan", "Rungsing", "Stress", "Marah", "Bimbang", "Sedih"];
+
+        function rotateWheel(deg) {
+            currentRotation += deg;
+            wheel.style.transform = `rotate(${currentRotation}deg)`;
+            
+            solveBtn.style.display = 'inline-block';
+            
+            // Logik kira emosi (Pointer statik kat atas)
+            // Kita offset +30 sebab kita mula pusingan pada -30
+            let angle = (currentRotation + 30) % 360;
+            if (angle < 0) angle += 360;
+            
+            let index = Math.round(angle / 60) % 6;
+            const chosenEmotion = emotions[index];
+            
+            solveBtn.innerText = `ATASI RASA ${chosenEmotion.toUpperCase()}`;
+            solveBtn.href = `mengatasi.html?emosi=${encodeURIComponent(chosenEmotion)}`;
+        }
+
+        function toggleMusic() {
+            if (bgMusic.paused) {
+                bgMusic.play();
+                document.getElementById('musicIcon').innerText = "🔊 Muzik ON";
+            } else {
+                bgMusic.pause();
+                document.getElementById('musicIcon').innerText = "🔈 Muzik OFF";
+            }
+        }
+    </script>
+</body>
+</html>
