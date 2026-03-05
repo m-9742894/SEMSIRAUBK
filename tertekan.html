@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pressure Release | UBK SEMSIRA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --stress-red: #ff7675;
+            --calm-green: #55efc4;
+            --bg-dark: #0f111a;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--bg-dark);
+            color: white;
+            font-family: 'Rajdhani', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        header { text-align: center; margin-top: 20px; }
+        h1 { font-family: 'Orbitron'; color: var(--stress-red); text-shadow: 0 0 15px var(--stress-red); font-size: 1.5rem; transition: 0.5s; }
+
+        /* --- INPUT SECTION --- */
+        .input-section {
+            width: 100%;
+            max-width: 400px;
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 20;
+        }
+
+        .input-box {
+            flex: 1;
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid var(--stress-red);
+            background: rgba(255,118,117,0.1);
+            color: white;
+            outline: none;
+        }
+
+        .btn-add {
+            padding: 10px 20px;
+            background: var(--stress-red);
+            border: none;
+            border-radius: 10px;
+            color: black;
+            font-weight: bold;
+            font-family: 'Orbitron';
+            font-size: 0.7rem;
+            cursor: pointer;
+        }
+
+        /* --- PRESSURE CORE --- */
+        .core-container {
+            position: relative;
+            width: 100%;
+            height: 350px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 30px 0;
+        }
+
+        .pressure-core {
+            width: 150px;
+            height: 150px;
+            background: var(--stress-red);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-family: 'Orbitron';
+            font-weight: bold;
+            font-size: 0.8rem;
+            color: black;
+            cursor: pointer;
+            box-shadow: 0 0 50px var(--stress-red);
+            transition: transform 0.1s, background 0.5s, box-shadow 0.5s;
+            user-select: none;
+            padding: 20px;
+            z-index: 10;
+        }
+
+        .steam {
+            position: absolute;
+            color: rgba(255,255,255,0.5);
+            font-size: 0.8rem;
+            pointer-events: none;
+            animation: steamUp 1s ease-out forwards;
+        }
+
+        @keyframes steamUp {
+            0% { transform: translateY(0) scale(1); opacity: 0.8; }
+            100% { transform: translateY(-150px) scale(2); opacity: 0; }
+        }
+
+        /* --- INFO LOGS --- */
+        .info-container {
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .info-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 4px solid var(--stress-red);
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            transition: 0.5s;
+        }
+
+        .info-card h3 { font-family: 'Orbitron'; color: var(--stress-red); font-size: 0.8rem; margin-bottom: 8px; transition: 0.5s; }
+        .info-card p { font-size: 0.95rem; line-height: 1.5; color: #ced6e0; }
+
+        .btn-back {
+            margin: 40px 0;
+            padding: 15px 40px;
+            background: transparent;
+            border: 2px solid var(--stress-red);
+            color: var(--stress-red);
+            text-decoration: none;
+            border-radius: 50px;
+            font-family: 'Orbitron';
+            font-size: 0.8rem;
+            transition: 0.5s;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1 id="mainTitle">PRESSURE ANALYZER</h1>
+        <p style="color: #636e72;">Lepaskan beban anda pada teras di bawah.</p>
+    </header>
+
+    <div class="input-section">
+        <input type="text" id="stressInput" class="input-box" placeholder="Apa yang menekan anda?">
+        <button class="btn-add" id="addBtn" onclick="injectStress()">INJECT</button>
+    </div>
+
+    <div class="core-container">
+        <div class="pressure-core" id="core" onclick="releasePressure()">
+            PRESS TO RELEASE
+        </div>
+    </div>
+
+    <div id="status" style="font-family: 'Orbitron'; color: var(--stress-red); margin-bottom: 20px;">
+        CORE STABILITY: 100%
+    </div>
+
+    <div class="info-container">
+        <div class="info-card" id="card1">
+            <h3>LOG #01: TEKANAN BUKAN HALANGAN</h3>
+            <p>Tekanan adalah tanda anda sedang mencuba sesuatu yang besar. Seperti berlian yang terhasil daripada tekanan yang tinggi, anda juga sedang dibentuk menjadi lebih berharga.</p>
+        </div>
+        <div class="info-card" id="card2">
+            <h3>LOG #02: TARIK NAFAS KOTAK</h3>
+            <p>Gunakan teknik 4-4-4: Tarik nafas 4 saat, tahan 4 saat, hembus 4 saat. Ini akan menghantar isyarat "selamat" kepada sistem saraf anda secara merta.</p>
+        </div>
+        <div class="info-card" id="card3">
+            <h3>LOG #03: SATU PERSATU</h3>
+            <p>Jangan tengok seluruh gunung. Tengok langkah kaki anda sekarang. Selesaikan satu perkara kecil, dan tekanan itu akan mula berkurangan secara automatik.</p>
+        </div>
+    </div>
+
+    <a href="wheel-game.html" class="btn-back" id="backBtn">KEMBALI KE RODA</a>
+
+    <script>
+        const core = document.getElementById('core');
+        const status = document.getElementById('status');
+        const stressInput = document.getElementById('stressInput');
+        const mainTitle = document.getElementById('mainTitle');
+        const root = document.querySelector(':root');
+        
+        let pressureLevel = 100;
+        let currentProblem = "PRESSURE";
+        let problemsList = [];
+
+        function injectStress() {
+            const val = stressInput.value.trim();
+            if(val !== "") {
+                currentProblem = val.toUpperCase();
+                problemsList.push(currentProblem);
+                pressureLevel += 30; // Tambah tekanan bila inject masalah baru
+                if(pressureLevel > 200) pressureLevel = 200;
+                updateCore();
+                stressInput.value = "";
+                core.innerText = currentProblem;
+            }
+        }
+
+        function releasePressure() {
+            if (pressureLevel > 40) {
+                pressureLevel -= 5;
+                
+                // Efek visual stim/masalah keluar
+                const steam = document.createElement('div');
+                steam.className = 'steam';
+                // Ambil masalah secara rawak dari list untuk looping keluar
+                const txt = problemsList.length > 0 ? problemsList[Math.floor(Math.random()*problemsList.length)] : "STRESS";
+                steam.innerText = txt;
+                steam.style.left = (core.offsetLeft + Math.random() * 100) + 'px';
+                steam.style.top = core.offsetTop + 'px';
+                document.body.appendChild(steam);
+                setTimeout(() => steam.remove(), 1000);
+
+                if (navigator.vibrate) navigator.vibrate(20);
+                updateCore();
+            }
+        }
+
+        function updateCore() {
+            const scale = pressureLevel / 100;
+            core.style.transform = `scale(${scale})`;
+            status.innerText = `CORE STABILITY: ${Math.floor(pressureLevel)}%`;
+
+            if (pressureLevel <= 60) {
+                // Keadaan Tenang
+                const green = "#55efc4";
+                core.style.background = green;
+                core.style.boxShadow = `0 0 50px ${green}`;
+                core.innerText = "CALM";
+                mainTitle.style.color = green;
+                mainTitle.style.textShadow = `0 0 15px ${green}`;
+                changeTheme(green);
+            } else {
+                // Keadaan Tertekan
+                const red = "#ff7675";
+                core.style.background = red;
+                core.style.boxShadow = `0 0 50px ${red}`;
+                mainTitle.style.color = red;
+                mainTitle.style.textShadow = `0 0 15px ${red}`;
+                changeTheme(red);
+            }
+        }
+
+        function changeTheme(color) {
+            document.getElementById('addBtn').style.background = color;
+            document.getElementById('backBtn').style.borderColor = color;
+            document.getElementById('backBtn').style.color = color;
+            document.querySelectorAll('.info-card').forEach(card => card.style.borderLeftColor = color);
+            document.querySelectorAll('.info-card h3').forEach(h => h.style.color = color);
+            status.style.color = color;
+        }
+
+        // Auto-increase pressure sikit demi sikit untuk cabaran
+        setInterval(() => {
+            if(pressureLevel < 120 && pressureLevel > 60) {
+                pressureLevel += 0.5;
+                updateCore();
+            }
+        }, 1000);
+
+    </script>
+</body>
+</html>
