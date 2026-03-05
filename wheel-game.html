@@ -203,7 +203,7 @@
         <button class="btn-nav" onclick="rotateWheel(-60)">➡️</button>
     </div>
 
-    <a href="mengatasi.html" id="solveBtn" class="btn-action">CARA MENGATASI</a>
+    <a href="#" id="solveBtn" class="btn-action">CARA MENGATASI</a>
 
     <a href="mindfulness.html" class="btn-back">← Kembali</a>
 
@@ -212,7 +212,6 @@
         const solveBtn = document.getElementById('solveBtn');
         const bgMusic = document.getElementById('bgMusic');
         
-        // Mula pada -30 supaya pointer tunjuk tengah partition pertama
         let currentRotation = -30; 
         const emotions = ["Tertekan", "Rungsing", "Stress", "Marah", "Bimbang", "Sedih"];
 
@@ -222,8 +221,6 @@
             
             solveBtn.style.display = 'inline-block';
             
-            // Logik kira emosi (Pointer statik kat atas)
-            // Kita offset +30 sebab kita mula pusingan pada -30
             let angle = (currentRotation + 30) % 360;
             if (angle < 0) angle += 360;
             
@@ -231,7 +228,11 @@
             const chosenEmotion = emotions[index];
             
             solveBtn.innerText = `ATASI RASA ${chosenEmotion.toUpperCase()}`;
-            solveBtn.href = `marah.html?emosi=${encodeURIComponent(chosenEmotion)}`;
+
+            // --- LOGIK DIRECT LINK ---
+            // Mengarahkan ke file .html mengikut nama emosi secara spesifik
+            let fileName = chosenEmotion.toLowerCase() + ".html";
+            solveBtn.href = fileName;
         }
 
         function toggleMusic() {
