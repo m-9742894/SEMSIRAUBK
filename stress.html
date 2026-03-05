@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atasi Stress | UBK SEMSIRA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-green: #55efc4;
+            --deep-bg: #0a192f;
+            --glass: rgba(255, 255, 255, 0.05);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: linear-gradient(180deg, #0a192f 0%, #000000 100%);
+            color: white;
+            font-family: 'Fredoka', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+            overflow-y: auto;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header { text-align: center; margin-bottom: 30px; }
+        h1 { font-family: 'Orbitron', sans-serif; color: var(--primary-green); text-shadow: 0 0 15px var(--primary-green); font-size: clamp(1.5rem, 8vw, 2.5rem); }
+
+        /* --- GAME INTERAKTIF: STRESS POPPER --- */
+        .game-section {
+            background: var(--glass);
+            border: 2px solid var(--primary-green);
+            border-radius: 30px;
+            padding: 25px;
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+            margin-bottom: 40px;
+            backdrop-filter: blur(10px);
+        }
+
+        .game-area {
+            height: 250px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            margin: 20px 0;
+            border: 1px solid rgba(85, 239, 196, 0.2);
+        }
+
+        .bubble {
+            position: absolute;
+            background: radial-gradient(circle at 30% 30%, var(--primary-green), #00b894);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 15px var(--primary-green);
+            transition: transform 0.1s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            color: #000;
+            font-weight: bold;
+            padding: 5px;
+        }
+
+        /* --- SECTION PENYELESAIAN KHAS --- */
+        .solution-section {
+            width: 100%;
+            max-width: 1000px;
+            margin-bottom: 40px;
+        }
+
+        .solution-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+        }
+
+        .sol-card {
+            background: rgba(85, 239, 196, 0.1);
+            border-left: 4px solid var(--primary-green);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .sol-card h4 {
+            color: var(--primary-green);
+            font-family: 'Orbitron', sans-serif;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .sol-card p {
+            font-size: 0.85rem;
+            color: #dfe6e9;
+            line-height: 1.4;
+        }
+
+        /* --- INFO CARDS --- */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        .card {
+            background: var(--glass);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 25px;
+            transition: 0.3s;
+        }
+
+        h3 { color: var(--primary-green); font-family: 'Orbitron', sans-serif; margin-bottom: 10px; }
+
+        /* --- BUTTONS --- */
+        .btn-action {
+            margin-top: 40px;
+            padding: 15px 40px;
+            background: var(--primary-green);
+            color: #000;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-family: 'Orbitron', sans-serif;
+            margin-bottom: 50px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>DECOMPRESS SYSTEM</h1>
+        <p style="color: #b2bec3;">Reset minda anda ke tahap optimum.</p>
+    </header>
+
+    <div class="game-section">
+        <h3>STRESS POPPER</h3>
+        <div class="game-area" id="gameArea"></div>
+        <p id="scoreLabel" style="font-family: 'Orbitron'; color: var(--primary-green);">Beban Dihapus: 0</p>
+    </div>
+
+    <div class="solution-section">
+        <h3 style="text-align: center; margin-bottom: 20px;">SYSTEM OVERLOAD FIX</h3>
+        <div class="solution-grid">
+            <div class="sol-card">
+                <h4>⚠️ SESAK (Overwhelmed)</h4>
+                <p>Gunakan teknik "Single Tasking". Fokus pada 1 perkara kecil sahaja sekarang. Abaikan yang lain sehingga yang 1 itu selesai.</p>
+            </div>
+            <div class="sol-card">
+                <h4>🔊 BISING (Noise)</h4>
+                <p>Cari "Silent Zone". Gunakan earphone atau sumbat telinga selama 10 minit. Beri telinga anda tempoh rehat daripada frekuensi luar.</p>
+            </div>
+            <div class="sol-card">
+                <h4>📂 KERJA (Workload)</h4>
+                <p>Bahagikan tugas guna Matrix Eisenhower. Buat yang penting & segera dahulu. Belajar kata "TIDAK" untuk tugas luar kemampuan.</p>
+            </div>
+            <div class="sol-card">
+                <h4>💤 PENAT (Exhaustion)</h4>
+                <p>Sistem saraf anda perlukan "Shutdown". Mandi air suam atau buat regangan ringan selama 5 minit untuk alirkan oksigen ke otot.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid-container">
+        <div class="card">
+            <h3>Brain Dump</h3>
+            <p>Stress berpunca daripada otak yang terlalu penuh. Ambil kertas, tulis SEMUA benda yang anda fikirkan selama 5 minit tanpa henti.</p>
+        </div>
+        <div class="card">
+            <h3>Teknik 5-4-3-2-1</h3>
+            <p>Kenalpasti 5 benda anda lihat, 4 benda anda sentuh, 3 bunyi anda dengar, 2 bau, dan 1 rasa untuk kembali tenang.</p>
+        </div>
+    </div>
+
+    <a href="wheel-game.html" class="btn-action">PUSING RODA</a>
+    <a href="mindfulness.html" style="color: #636e72; text-decoration: none; font-size: 0.8rem; margin-bottom: 50px;">← Kembali ke Menu</a>
+
+    <script>
+        // --- LOGIK GAME STRESS POPPER ---
+        const gameArea = document.getElementById('gameArea');
+        const scoreLabel = document.getElementById('scoreLabel');
+        let score = 0;
+        const stressWords = ["SESAK", "BISING", "KERJA", "PENAT"];
+
+        function createBubble() {
+            const bubble = document.createElement('div');
+            bubble.className = 'bubble';
+            const size = Math.random() * 40 + 50; 
+            bubble.style.width = size + 'px';
+            bubble.style.height = size + 'px';
+            const x = Math.random() * (gameArea.clientWidth - size);
+            const y = Math.random() * (gameArea.clientHeight - size);
+            bubble.style.left = x + 'px';
+            bubble.style.top = y + 'px';
+            bubble.innerText = stressWords[Math.floor(Math.random() * stressWords.length)];
+
+            bubble.onclick = () => {
+                bubble.style.transform = "scale(0)";
+                setTimeout(() => bubble.remove(), 100);
+                score++;
+                scoreLabel.innerText = "Beban Dihapus: " + score;
+                createBubble();
+            };
+            gameArea.appendChild(bubble);
+
+            setTimeout(() => {
+                if(bubble.parentElement) {
+                    bubble.style.opacity = '0';
+                    setTimeout(() => { if(bubble.parentElement) { bubble.remove(); createBubble(); } }, 500);
+                }
+            }, 3000);
+        }
+
+        for(let i=0; i<4; i++) { setTimeout(createBubble, i * 500); }
+    </script>
+</body>
+</html>
