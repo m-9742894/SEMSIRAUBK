@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rain of Relief | UBK SEMSIRA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --sea-blue: #00cec9;
+            --soft-white: #dfe6e9;
+            --petal-pink: #fd79a8;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: linear-gradient(180deg, #0a3d62 0%, #000000 100%);
+            color: white;
+            font-family: 'Fredoka', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        header { text-align: center; margin-top: 20px; z-index: 10; }
+        h1 { font-family: 'Orbitron'; color: var(--sea-blue); text-shadow: 0 0 15px var(--sea-blue); font-size: 1.5rem; }
+
+        .input-section {
+            width: 100%;
+            max-width: 400px;
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 20;
+        }
+
+        .input-box {
+            flex: 1;
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid var(--sea-blue);
+            background: rgba(255,255,255,0.1);
+            color: white;
+            font-family: 'Fredoka';
+            outline: none;
+        }
+
+        .btn-add {
+            padding: 10px 20px;
+            background: var(--sea-blue);
+            border: none;
+            border-radius: 10px;
+            color: black;
+            font-weight: bold;
+            font-family: 'Orbitron';
+            font-size: 0.7rem;
+            cursor: pointer;
+        }
+
+        .game-world {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            margin: 20px 0;
+            overflow: hidden;
+            border: 1px solid rgba(0, 206, 201, 0.2);
+            touch-action: none;
+        }
+
+        .catcher {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            width: 100px;
+            height: 15px;
+            background: var(--sea-blue);
+            border-radius: 50px;
+            box-shadow: 0 0 30px var(--sea-blue);
+            transform: translateX(-50%);
+            z-index: 5;
+        }
+
+        .raindrop {
+            position: absolute;
+            color: white;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            opacity: 0.8;
+            top: -40px;
+            pointer-events: none;
+            font-weight: bold;
+        }
+
+        .petal {
+            position: absolute;
+            font-size: 1.5rem;
+            z-index: 4;
+            pointer-events: none;
+            animation: fallRotate 2.5s linear forwards;
+        }
+
+        @keyframes fallRotate {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100px) rotate(360deg); opacity: 0; }
+        }
+
+        .info-container {
+            width: 100%;
+            max-width: 500px;
+            margin-bottom: 30px;
+        }
+
+        .info-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-left: 4px solid var(--sea-blue);
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+        }
+
+        .info-card h3 { font-family: 'Orbitron'; color: var(--sea-blue); font-size: 0.8rem; margin-bottom: 10px; }
+        .info-card p { font-size: 0.95rem; line-height: 1.6; color: #b2bec3; }
+
+        .btn-back {
+            padding: 15px 40px;
+            background: transparent;
+            border: 2px solid var(--sea-blue);
+            color: var(--sea-blue);
+            text-decoration: none;
+            border-radius: 50px;
+            font-family: 'Orbitron';
+            font-size: 0.8rem;
+            margin-bottom: 50px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>RAIN OF RELIEF</h1>
+        <p style="color: #636e72;">Tangkap titisan sedih untuk menjadi bunga yang indah.</p>
+    </header>
+
+    <div class="input-section">
+        <input type="text" id="sadInput" class="input-box" placeholder="Apa yang buat anda sedih?">
+        <button class="btn-add" onclick="addSadToLoop()">LEPASKAN</button>
+    </div>
+
+    <div class="game-world" id="gameWorld">
+        <div class="catcher" id="catcher"></div>
+    </div>
+
+    <div id="score" style="font-family: 'Orbitron'; color: var(--sea-blue); margin-bottom: 20px;">
+        BUNGA MEKAR: 0
+    </div>
+
+    <div class="info-container">
+        <div class="info-card">
+            <h3>LOG #01: IZINKAN AIR MATA</h3>
+            <p>Menangis bukanlah tanda lemah. Ia adalah cara badan melepaskan toksin stres. Ibarat hujan yang membersihkan debu, air mata membersihkan jiwa.</p>
+        </div>
+        <div class="info-card">
+            <h3>LOG #02: MUSIM AKAN BERTUKAR</h3>
+            <p>Kesedihan adalah sebuah musim, bukan keadaan kekal. Seperti alam yang perlukan hujan untuk tumbuh, hati kita juga perlukan saat ini untuk lebih kuat.</p>
+        </div>
+        <div class="info-card">
+            <h3>LOG #03: RAWAT DIRI</h3>
+            <p>Hari ini, buatlah satu perkara kecil yang menggembirakan anda. Mandi air hangat, dengar lagu kegemaran, atau hanya tidur sekejap. Anda layak mendapat rehat.</p>
+        </div>
+    </div>
+
+    <a href="wheel-game.html" class="btn-back">KEMBALI KE RODA</a>
+
+    <script>
+        const world = document.getElementById('gameWorld');
+        const catcher = document.getElementById('catcher');
+        const scoreEl = document.getElementById('score');
+        const sadInput = document.getElementById('sadInput');
+        let flowersCreated = 0;
+        let sadLoopList = ["kesedihan"];
+
+        function moveCatcher(clientX) {
+            const rect = world.getBoundingClientRect();
+            let x = clientX - rect.left;
+            if (x < 50) x = 50;
+            if (x > rect.width - 50) x = rect.width - 50;
+            catcher.style.left = x + 'px';
+        }
+
+        world.addEventListener('mousemove', (e) => moveCatcher(e.clientX));
+        world.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+            moveCatcher(e.touches[0].clientX);
+        }, {passive: false});
+
+        function addSadToLoop() {
+            const val = sadInput.value.trim();
+            if(val !== "") {
+                sadLoopList.push(val);
+                sadInput.value = "";
+            }
+        }
+
+        function createRaindrop() {
+            const drop = document.createElement('div');
+            drop.className = 'raindrop';
+            const randomText = sadLoopList[Math.floor(Math.random() * sadLoopList.length)];
+            drop.innerText = randomText;
+            
+            const startX = Math.random() * (world.clientWidth - 80);
+            drop.style.left = startX + 'px';
+            world.appendChild(drop);
+
+            let topPos = -40;
+            const fallSpeed = 2 + Math.random() * 2.5;
+
+            const fall = setInterval(() => {
+                topPos += fallSpeed;
+                drop.style.top = topPos + 'px';
+
+                // COLLISION LOGIC FIXED
+                const dRect = drop.getBoundingClientRect();
+                const cRect = catcher.getBoundingClientRect();
+
+                // Detect overlap
+                if (
+                    dRect.bottom >= cRect.top && 
+                    dRect.top <= cRect.bottom &&
+                    dRect.right >= cRect.left &&
+                    dRect.left <= cRect.right
+                ) {
+                    clearInterval(fall);
+                    const worldRect = world.getBoundingClientRect();
+                    // Generate petal at current drop position relative to game world
+                    createPetal(dRect.left - worldRect.left, dRect.top - worldRect.top);
+                    drop.remove();
+                    flowersCreated++;
+                    scoreEl.innerText = `BUNGA MEKAR: ${flowersCreated}`;
+                    if (navigator.vibrate) navigator.vibrate(30);
+                }
+
+                if (topPos > world.clientHeight) {
+                    clearInterval(fall);
+                    drop.remove();
+                }
+            }, 20);
+        }
+
+        function createPetal(left, top) {
+            const petal = document.createElement('div');
+            petal.className = 'petal';
+            const emojis = ['🌸', '🌼', '🌺', '🌻', '🌷', '✨'];
+            petal.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+            petal.style.left = left + 'px';
+            petal.style.top = top + 'px';
+            world.appendChild(petal);
+            
+            setTimeout(() => {
+                if(petal.parentNode) petal.remove();
+            }, 2500);
+        }
+
+        setInterval(createRaindrop, 1000);
+    </script>
+</body>
+</html>
