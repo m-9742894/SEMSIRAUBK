@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atasi Marah | UBK SEMSIRA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-red: #ff7675;
+            --neon-glow: #ff4757;
+            --glass-bg: rgba(255, 255, 255, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: radial-gradient(circle at center, #2d3436 0%, #000 100%);
+            color: white;
+            font-family: 'Fredoka', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+            overflow-y: auto;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* --- NEON COUNTER BOX --- */
+        .counter-section {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 2px solid var(--primary-red);
+            border-radius: 30px;
+            padding: 30px;
+            text-align: center;
+            width: 100%;
+            max-width: 450px;
+            margin-bottom: 40px;
+            box-shadow: 0 0 20px rgba(255, 118, 117, 0.2);
+        }
+
+        .counter-display {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 5rem;
+            color: var(--primary-red);
+            text-shadow: 0 0 20px var(--neon-glow);
+            margin: 10px 0;
+            transition: 0.2s;
+        }
+
+        .info-text {
+            font-size: 0.85rem;
+            color: #fab1a0;
+            line-height: 1.4;
+            margin-bottom: 15px;
+            background: rgba(0,0,0,0.3);
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .btn-tap {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-family: 'Orbitron', sans-serif;
+            cursor: pointer;
+            transition: 0.3s;
+            text-transform: uppercase;
+        }
+
+        .btn-tap:active { transform: scale(0.9); background: var(--primary-red); }
+
+        /* --- INTERACTIVE BREATHING TIMER --- */
+        .breath-card {
+            grid-column: 1 / -1;
+            text-align: center;
+            background: rgba(255, 118, 117, 0.05);
+            border: 2px solid var(--primary-red);
+            padding: 40px;
+            border-radius: 30px;
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        .timer-options {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .btn-timer {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid white;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .btn-timer.active { background: var(--primary-red); border-color: var(--primary-red); }
+
+        .circle-container { position: relative; width: 150px; height: 150px; margin: 20px auto; }
+
+        .circle {
+            width: 100%; height: 100%;
+            background: var(--primary-red);
+            border-radius: 50%;
+            box-shadow: 0 0 40px var(--primary-red);
+            transition: transform 4s ease-in-out;
+            opacity: 0.6;
+        }
+
+        /* Animasi Nafas Berjalan */
+        .breathing .circle { animation: breatheCycle 8s infinite ease-in-out; }
+
+        @keyframes breatheCycle {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.8); }
+        }
+
+        .timer-display {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            font-weight: bold;
+            z-index: 10;
+        }
+
+        /* --- GRID & OTHERS --- */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            max-width: 1000px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        h1 { font-family: 'Orbitron', sans-serif; font-size: clamp(1.5rem, 7vw, 2.5rem); color: var(--primary-red); margin-bottom: 30px; }
+        h3 { color: var(--primary-red); margin-bottom: 10px; font-family: 'Orbitron', sans-serif; }
+
+        .btn-home {
+            margin: 40px 0;
+            padding: 15px 40px;
+            background: var(--primary-red);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-family: 'Orbitron', sans-serif;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>CONTROL YOUR FIRE</h1>
+
+    <div class="counter-section">
+        <h3 style="margin-bottom: 5px;">KIRAAN 10 SAAT</h3>
+        <div class="info-text">
+            <b>Kenapa kita mengira?</b> Mengira memberikan "masa bertenang" kepada otak emosi (Amygdala) untuk berehat dan membenarkan otak logik (Prefrontal Cortex) mengambil alih situasi.
+        </div>
+        <div class="counter-display" id="countNum">0</div>
+        <button class="btn-tap" onclick="countUp()">TEKAN & KIRA</button>
+        <p id="counterMsg" style="margin-top: 15px; font-size: 0.8rem; color: #b2bec3;">Fokus pada setiap nombor...</p>
+    </div>
+
+    <div class="breath-card" id="breathArea">
+        <h3>LATIHAN PERNAFASAN</h3>
+        <p style="margin-bottom: 20px; color: #b2bec3;">Pilih timer dan ikut rentak bulatan.</p>
+        
+        <div class="timer-options">
+            <button class="btn-timer" onclick="setTimer(10, this)">10s</button>
+            <button class="btn-timer" onclick="setTimer(20, this)">20s</button>
+            <button class="btn-timer" onclick="setTimer(30, this)">30s</button>
+        </div>
+
+        <div class="circle-container">
+            <div class="timer-display" id="timerNum">--</div>
+            <div class="circle"></div>
+        </div>
+
+        <button class="btn-tap" id="startBreathBtn" onclick="startBreathing()" style="border-color: var(--primary-red); color: var(--primary-red);">MULA PERNAFASAN</button>
+    </div>
+
+    <div class="grid-container">
+        <div class="card">
+            <span style="font-size: 2rem;">🌊</span>
+            <h3>Visualisasi Air</h3>
+            <p>Bayangkan api kemarahan anda sedang dipadamkan oleh air terjun yang sejuk dan tenang.</p>
+        </div>
+        <div class="card">
+            <span style="font-size: 2rem;">🏃</span>
+            <h3>Lepaskan Tenaga</h3>
+            <p>Lakukan aktiviti fizikal ringkas seperti berjalan laju untuk membuang hormon stres.</p>
+        </div>
+    </div>
+
+    <a href="wheel-game.html" class="btn-home">PUSING SEMULA</a>
+    <a href="mindfulness.html" style="color: #636e72; text-decoration: none; font-size: 0.8rem; margin-bottom: 50px;">← Kembali ke Menu</a>
+
+    <script>
+        // --- LOGIK COUNTER ---
+        let count = 0;
+        function countUp() {
+            count++;
+            const display = document.getElementById('countNum');
+            display.style.transform = "scale(1.2)";
+            setTimeout(() => display.style.transform = "scale(1)", 100);
+
+            if (count > 10) { count = 0; }
+            display.innerText = count;
+            document.getElementById('counterMsg').innerText = count === 10 ? "Bagus! Anda lebih terkawal." : "Teruskan mengira...";
+        }
+
+        // --- LOGIK BREATHING TIMER ---
+        let timeLeft = 0;
+        let timerInterval;
+        const timerDisplay = document.getElementById('timerNum');
+        const breathArea = document.getElementById('breathArea');
+
+        function setTimer(seconds, btn) {
+            clearInterval(timerInterval);
+            timeLeft = seconds;
+            timerDisplay.innerText = timeLeft + "s";
+            
+            // Highlight button
+            document.querySelectorAll('.btn-timer').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            // Reset animation
+            breathArea.classList.remove('breathing');
+            document.getElementById('startBreathBtn').style.display = 'inline-block';
+        }
+
+        function startBreathing() {
+            if (timeLeft <= 0) {
+                alert("Sila pilih masa dahulu!");
+                return;
+            }
+
+            document.getElementById('startBreathBtn').style.display = 'none';
+            breathArea.classList.add('breathing');
+
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                timerDisplay.innerText = timeLeft + "s";
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    breathArea.classList.remove('breathing');
+                    timerDisplay.innerText = "DONE";
+                    setTimeout(() => {
+                        document.getElementById('startBreathBtn').style.display = 'inline-block';
+                        timerDisplay.innerText = "--";
+                    }, 2000);
+                }
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
